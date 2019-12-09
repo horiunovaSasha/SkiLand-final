@@ -1,0 +1,135 @@
+﻿@model SkiLand.Domain.Models.HotelDetailItem
+
+<p class="hotel-title color-w p-2"><span class="p-3"><b>Бронювання:</b></span></p>
+<div class="p-3">
+
+    @if (ViewBag.Response != null && !ViewBag.Response.IsSuccessful)
+    {
+        foreach (var msg in ViewBag.Response.Messages)
+        {
+            <div class="row alert alert-danger" role="alert">
+                <div class="col-md-12">
+                    @msg
+                </div>
+            </div>
+        }
+    }
+
+    @if (ViewBag.Request != null)
+    {
+        <div id="success-reservation" class="row p-2" style="margin-top: -45px">
+            <div class="col-md-12">
+                <em>
+                    <br />
+                    Вітаємо, Ви успішно створили бронювання №@ViewBag.Request.Id у нашому готелі!<br /> <br />
+                    Бронювання автоматично підтвержено і на Вашу електронну пошту відправлено листа із деталями резервації.<br /><br />
+                </em>
+            </div>
+            <label class="col-md-6">Дата заїзду:</label>
+            <label class="col-md-6">@ViewBag.Request.StartDate.ToShortDateString()</label>
+            <label class="col-md-6">Дата виїзду:</label>
+            <label class="col-md-6">@ViewBag.Request.EndDate.ToShortDateString()</label>
+            <label class="col-md-6">Дорослих:</label>
+            <label class="col-md-6">@ViewBag.Request.Adults</label>
+            <label class="col-md-6">Дітей:</label>
+            <label class="col-md-6">@ViewBag.Request.Children</label>
+            <label class="col-md-6">Вартість:</label>
+            <label class="col-md-6"><b>@ViewBag.Request.Price</b> грн</label>
+        </div>
+        <div class="row success-reservation-btns">
+            <div class="col-md-12 text-center hotel-title p-2">
+                <a href="#" class="create-booking">Створити бронювання</a>
+                @if (Model.Room.Reservations.Any())
+                {
+                    <br />
+                    <a href="#" class="show-bookings">Moї бронювання</a>
+                }
+            </div>
+        </div>
+    }
+
+    <form method="post" id="reservationForm" style="display: @(ViewBag.Request == null && (Model.ReservationResponse == null || !Model.ReservationResponse.IsSuccessful) ? "block" : "none")">
+        <input type="hidden" asp-for="ReservationRequest.HotelId" value="@Model.Id" />
+        <input type="hidden" asp-for="ReservationRequest.RoomId" value="@Model.Room.Id" />
+        <input type="hidden" asp-for="ReservationRequest.RoomTypeId" value="@Model.Room.RoomType.Id" />
+        <div class="form-group row">
+            <label class="col-md-6">Дата заїзду:</label>
+            <input type="date" class="form-control col-md-6" required="required" asp-for="ReservationRequest.StartDate">
+        </div>
+        <div class="form-group row">
+            <div class="col-md-6">Дата виїзду:</div>
+            <input type="date" class="form-control col-md-6" required="required" asp-for="ReservationRequest.EndDate" />
+        </div>
+        <div class="form-group row">
+            <div class="col-md-6">Дорослих:</div>
+            <select class="form-control col-md-6" asp-for="ReservationRequest.Adults">
+                @for (int i = 1; i <= Model.Room.Adults; i++)
+                {
+                    <option>@i</option>
+                }
+            </select>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-6">Дітей:</div>
+            <select class="form-control col-md-6" asp-for="ReservationRequest.Children">
+                <option>0</option>
+                @for (int i = 1; i < Model.Room.Children; i++)
+                {
+                    <option>@i</option>
+                }
+            </select>
+        </div>
+        <div class="form-group text-right">
+            <button class="btn btn-primary">Бронювати</button>
+            @if (Model.Room.Reservations.Any())
+            {
+                <br />
+                <a href="#" class="show-bookings">Moї бронювання</a>
+            }
+        </div>
+    </form>
+
+    @if (Model.Room.Reservations.Any())
+    {
+        <div class="row reservation-list" style="margin-top: -33px; display:none">
+            <div id="carouselReservationControls" class="carousel slide p-3" data-ride="carousel">
+                <ol class="carousel-indicators">
+                    @for (int i = 0; i < Model.Room.Reservations.Count(); i++)
+                    {
+                        <li data-target="#carouselReservationControls" data-slide-to="@i" class="@(i == 0 ? "active" : "")"></li>
+                    }
+                </ol>
+                <div class="carousel-inner">
+                    @foreach (var reservation in Model.Room.Reservations)
+                    {
+                        <div class="carousel-item @(reservation == Model.Room.Reservations.First() ? "active" : "")">
+                            <div class="row">
+                                <label class="col-md-12 text-center"><b>Бронювання №@reservation.Id від @reservation.BookingDate.ToShortDateString()</b></label>
+                                <label class="col-md-6">Дата заїзду:</label>
+                                <label class="col-md-6">@reservation.StartDate.ToShortDateString()</label>
+                                <label class="col-md-6">Дата виїзду:</label>
+                                <label class="col-md-6">@reservation.EndDate.ToShortDateString()</label>
+                                <label class="col-md-6">Дорослих:</label>
+                                <label class="col-md-6">@reservation.Adults</label>
+                                <label class="col-md-6">Дітей:</label>
+                                <label class="col-md-6">@reservation.Children</label>
+                                <label class="col-md-6">Вартість:</label>
+                                <label class="col-md-6"><b>@reservation.Price</b> грн</label>
+                                <label class="col-md-12">&nbsp;</label>
+                            </div>
+                        </div>
+                    }
+                </div>
+                <a class="carousel-control-prev" href="#carouselReservationControls" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselReservationControls" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+            <div class="col-md-12 text-center hotel-title p-2"><a href="#" class="create-booking">Створити бронювання</a><br /></div>
+        </div>
+    }
+</div>

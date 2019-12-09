@@ -1,0 +1,215 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using SkiLand.Web.Models
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@{
+    var controller = ViewContext.RouteData.Values["controller"].ToString();
+    var action = ViewContext.RouteData.Values["action"].ToString();
+
+    if (ViewBag.Request == null)
+    {
+        ViewBag.Request = new SkiLand.Domain.Models.HotelReservationRequest();
+    }
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewData["Title"] - SkiLand</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Destino project">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="/styles/bootstrap4/bootstrap.min.css">
+    <link href="/plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    @RenderSection("styles", required: false)
+</head>
+<body>
+    <div class="super_container">
+        <!-- Header -->
+        <header class="header">
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <div class="header_container d-flex flex-row align-items-center justify-content-start">
+                            <!-- Logo -->
+                            <div class="logo_container">
+                                <div class="logo">
+                                    <div> <a style="text-decoration: none !important; color:#fe435b " href="/Home"> SkiLand </a></div>
+                                    <div>Велич Карпат</div>
+                                </div>
+                            </div>
+                            <!-- Main Navigation -->
+                            <nav class="main_nav ml-auto">
+                                <ul class="main_nav_list">
+                                    <li class="main_nav_item"><a href="/hotels">Готелі</a></li>
+                                    <li class="main_nav_item"><a href="offers.html">Ресторани</a></li>
+                                    <li class="main_nav_item"><a href="offers.html">Прокат</a></li>
+                                    <li class="main_nav_item"><a href="news.html">Екскурсії</a></li>
+                                    <li class="main_nav_item"><a href="news.html">SPA</a></li>
+                                    <li class="main_nav_item"><a href="news.html">Про Нас</a></li>
+                                    @if (SignInManager.IsSignedIn(User))
+                                    {
+                                        <li class="main_nav_item">
+                                            <a src="location.href='@Url.Action("Logout", "Account")'" asp-area="" asp-controller="Account" asp-action="LogOut">Вийти</a>
+                                        </li>
+                                    }
+                                    else
+                                    {
+                                        <li class="main_nav_item"><a asp-area="" asp-controller="Account" asp-action="Login">Увійти</a></li>
+                                    }
+                                </ul>
+                            </nav>
+                            <!-- Hamburger -->
+                            <div class="hamburger ml-auto"><i class="fa fa-bars" aria-hidden="true"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- Menu -->
+        <div class="menu_container menu_mm">
+            <!-- Menu Close Button -->
+            <div class="menu_close_container">
+                <div class="menu_close"></div>
+            </div>
+            <!-- Menu Items -->
+            <div class="menu_inner menu_mm">
+                <div class="menu menu_mm">
+                    <div class="menu_search_form_container">
+                        <form action="#" id="menu_search_form">
+                            <input type="search" class="menu_search_input menu_mm">
+                            <button id="menu_search_submit" class="menu_search_submit" type="submit"><img src="images/search_2.png" alt=""></button>
+                        </form>
+                    </div>
+                    <ul class="menu_list menu_mm">
+                        <li class="menu_item menu_mm"><a href="/">Головна</a></li>
+                        <li class="menu_item menu_mm"><a href="/hotels">Готелі</a></li>
+                        <li class="menu_item menu_mm"><a href="offers.html">Ресторани</a></li>
+                        <li class="menu_item menu_mm"><a href="offers.html">Прокат</a></li>
+                        <li class="menu_item menu_mm"><a href="news.html">Екскурсії</a></li>
+                        <li class="menu_item menu_mm"><a href="news.html">SPA</a></li>
+                        <li class="menu_item menu_mm"><a href="news.html">Про Нас</a></li>
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            <li class="menu_item menu_mm">
+                                <a src="location.href='@Url.Action("Logout", "Account")'" asp-area="" asp-controller="Account" asp-action="LogOut">Вийти</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="menu_item menu_mm"><a asp-area="" asp-controller="Account" asp-action="Login">Увійти</a></li>
+                        }
+                    </ul>
+                    <div class="menu_copyright menu_mm">&copy; @DateTime.Now.Year - SkiLand - Усі права захищено</div>
+                </div>
+            </div>
+        </div>
+        @RenderSection("top_background", required: false)
+        <!-- Find Form -->
+        <div class="find">
+            @if (controller == "Home")
+            {
+                <div class="find_background parallax-window" data-parallax="scroll" data-image-src="/images/find.jpg" data-speed="0.8"></div>
+            }
+
+            @if (controller != "Account" && (controller == "Hotel" && action == "Index"))
+            {
+                <div class="find_background_container prlx_parent">
+                    <div class="find_background prlx" style="background-image:url(/images/find.jpg)"></div>
+                </div>
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="find_title text-center">Бронювання Готелів</div>
+                        </div>
+                        <div class="col-12">
+                            <div class="find_form_container">
+                                <form action="/hotels" method="get" class="d-flex flex-md-row flex-column align-items-md-center align-items-start justify-content-md-between justify-content-start flex-wrap">
+                                    <div class="find_item">
+                                        <div>Дата заїзду:</div>
+                                        <input type="date" class="find_input" required="required" name="startDate" id="startDate" value="@ViewBag.Request.StartDate.ToString("yyyy-MM-dd")">
+                                    </div>
+                                    <div class="find_item">
+                                        <div>Дата виїзду:</div>
+                                        <input type="date" class="find_input" required="required" name="endDate" id="endDate" value="@ViewBag.Request.EndDate.ToString("yyyy-MM-dd")">
+                                    </div>
+                                    <div class="find_item">
+                                        <div>Дорослих:</div>
+                                        <input type="text" class="find_input" required="required" value="@ViewBag.Request.Adults" placeholder="2" name="adults">
+                                    </div>
+                                    <div class="find_item">
+                                        <div>Дітей:</div>
+                                        <input type="text" class="find_input" required="required" value="@ViewBag.Request.Children" placeholder="0" name="children">
+                                    </div>
+                                    <button class="button find_button">Пошук</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="top">
+            <div role="main" class="container">
+                <div class="row">
+                    <div class="col">
+                        @RenderBody()
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <!-- Footer Column -->
+                <div class="col-lg-3 footer_col">
+                    <div class="footer_about">
+                        <!-- Logo -->
+                        <div class="logo_container">
+                            <div class="logo">
+                                <div>  SkiLand </div>
+                                <div>Велич Карпат</div>
+                            </div>
+                        </div>
+                        <div class="footer_about_text">
+                            Карпатських гір торкнулася душа,
+                            Яке це диво Божої природи:
+                            Смереки ніжно ріжуть небеса,
+                            Так величаво сонце з гір виходить.
+                            А трави пахнуть,краще всіх парфум,
+                            Мов килими, квітують полонини,
+                            Трембіти голос розганяє сум,
+                            Купаються у хмарах верховини.
+                        </div>
+                        <div class="copyright">
+                            &copy; @DateTime.Now.Year - SkiLand - Усі права захищено
+                        </div>
+                    </div>
+                </div>
+                <!-- Footer Column -->
+                <div class="col-lg-3 footer_col">
+                    <div class="tags footer_tags">
+                        <div class="footer_title">Навігація</div>
+                        <ul class="tags_content d-flex flex-row flex-wrap align-items-start justify-content-start">
+                            <li class="tag"><a href="/">Головна</a></li>
+                            <li class="tag"><a href="/hotels">Готелі</a></li>
+                            <li class="tag"><a href="#">Ресторани</a></li>
+                            <li class="tag"><a href="#">Прокат</a></li>
+                            <li class="tag"><a href="#">Екскурсії</a></li>
+                            <li class="tag"><a href="#">SPA</a></li>
+                            <li class="tag"><a href="#">Про Нас</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-6 footer_col">
+                    <div class="footer_title">Відео</div>
+                    <iframe width="100%" height="100%" src="https://www.youtube.com/embed/Ob-E3s_jwd8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </footer>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

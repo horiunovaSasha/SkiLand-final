@@ -1,0 +1,166 @@
+﻿
+@{
+    ViewData["Title"] = "Готелі";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section styles
+    {
+    <link href="https://fonts.googleapis.com/css?family=Muli:300,400,600,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,400i,700" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="/styles/hotels_styles.css">
+    <link rel="stylesheet" type="text/css" href="/styles/icomoon.css">
+    <link rel="stylesheet" type="text/css" href="/styles/style.css">
+
+    <link rel="stylesheet" type="text/css" href="/styles/hotels_responsive.css">
+}
+@section top_background
+    {
+    <div class="home">
+        <div class="home_background parallax-window" data-parallax="scroll" data-image-src="/images/bg_3.jpg" data-speed="0.4"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="home_content">
+                        <div class="home_content_inner">
+
+                            <h2 class="home_title text p-4">
+                                My Dream Hotel
+                                <span class="rating rating_5" style="vertical-align: top; line-height: 60px;">
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                </span>
+                            </h2>
+                            <div class="home_breadcrumbs">
+                                <ul class="home_breadcrumbs_list">
+                                    <li class="home_breadcrumb"><a href="/">Головна</a></li>
+                                    <li class="home_breadcrumb"><a href="/hotels">Готелі</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<p class="p-23"></p>
+@*<h2 class="text p-4">
+        My Dream Hotel
+        <span class="rating rating_5" style="vertical-align: top; line-height: 30px;">
+            <i class="fa fa-star"></i>
+            <i class="fa fa-star"></i>
+            <i class="fa fa-star"></i>
+            <i class="fa fa-star"></i>
+        </span>
+    </h2>*@
+<div class="row">
+    <div class="col-md-12 ">
+        <div class="room-wrap">
+            <div class="row text p-4">
+                <div class="col-md-12 text-right">
+                    <h3>Оцінка: 4.8</h3>
+                </div>
+                <div class="col-md-12 ">
+                    <div class="d-flex mb-1">
+                        <div class="one-third">
+                            <h6>
+                                <a href="#" class="p-3">Single Room </a>|
+                                <span class="p-3">Double Room </span>|
+                                <span class="p-3">Family Room </span>|
+                                <span class="p-3">Luxury Room  </span>
+                            </h6>
+                        </div>
+                        <div class="one-forth text-center">
+                            <p class="price">$99&nbsp;<span>/night</span></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="room-img" style="background-image: url(/images/room-2.jpg);"></div>
+                    <div class="p-3">
+                        Offering panoramic views of Warsaw, the modern-looking Novotel Warszawa Centrum is located in central Warsaw, a 5-minute walk from the Central Railway Station. The hotel serves a varied breakfast. WiFi is offered throughout this 4-star hotel. All areas are nonsmoking.
+                        <br />
+                        The air conditioned rooms at Novotel Warszawa Centrum come with a flat-screen TV, tea and coffee facilities, and a safe. There is a mini-bar at a surcharge.The rooms also have a work area and armchairs or a sofa. All feature a spacious bathroom with a bath or a shower and a hairdryer.
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="p-4">
+                        <form action="#" id="" class="">
+                            <div class="form-group">
+                                <label for="from">Дата заїзду:</label>
+                                <input type="date" id=" from" class="form-control" required="required">
+                            </div>
+                            <div class="form-group">
+                                <div>Дата виїзду:</div>
+                                <input type="date" class="form-control" required="required">
+                            </div>
+                            <div class="form-group">
+                                <div>Дорослих:</div>
+                                <input type="text" class="form-control" required="required" value="2" placeholder="2">
+                            </div>
+                            <div class="form-group">
+                                <div>Дітей:</div>
+                                <input type="text" class="form-control form-inline" required="required" value="0" placeholder="0">
+                            </div>
+                            <div class="form-group text-right">
+                                <button class="btn btn-primary">Reserve a room</button>
+                            </div>
+                        </form>
+                    </div>
+                    @*<a href="#" class="btn btn-primary">Reserve a room</a>*@
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="room-wrap">
+            <div class="text p-4">
+                <p class="features">
+                    <span class="p-3">Amenities:</span>
+                    <div class="row">
+                        <div class="col-md-4 mb-2"><i class="icon-check mr-2"></i> Perfect for traveling couples</div>
+                        <div class="col-md-4 mb-2"><i class="icon-check mr-2"></i> Breakfast included</div>
+                        <div class="col-md-4 mb-2"><i class="icon-check mr-2"></i> Two double beds</div>
+                        <div class="col-md-4 mb-2"><i class="icon-check mr-2"></i> Baby sitting facilities</div>
+                        <div class="col-md-4 mb-2"><i class="icon-check mr-2"></i> Free wifi</div>
+                        <div class="col-md-4 mb-2"><i class="icon-check mr-2"></i> Perfect for traveling couples</div>
+                        <div class="col-md-4 mb-2"><i class="icon-check mr-2"></i> Breakfast included</div>
+                        <div class="col-md-4 mb-2"><i class="icon-check mr-2"></i> Two double beds</div>
+                        <div class="col-md-4 mb-2"><i class="icon-check mr-2"></i> Baby sitting facilities</div>
+                        <div class="col-md-4 mb-2"><i class="icon-check mr-2"></i> Free wifi</div>
+                        <div class="col-md-4 mb-2"><i class="icon-check mr-2"></i> Perfect for traveling couples</div>
+                        <div class="col-md-4 mb-2"><i class="icon-check mr-2"></i> Breakfast included</div>
+                        <div class="col-md-4 mb-2"><i class="icon-check mr-2"></i> Two double beds</div>
+                        <div class="col-md-4 mb-2"><i class="icon-check mr-2"></i> Baby sitting facilities</div>
+                        <div class="col-md-4 mb-2"><i class="icon-check mr-2"></i> Free wifi</div>
+                    </div>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 p-3">
+        <div id="map" class="bg-white"></div>
+    </div>
+</div>
+
+@section Scripts
+    {
+    <!-- loader -->
+    <script src="/js/jquery-3.2.1.min.js"></script>
+    <script src="/styles/bootstrap4/popper.js"></script>
+    <script src="/styles/bootstrap4/bootstrap.min.js"></script>
+    <script src="/plugins/greensock/TweenMax.min.js"></script>
+    <script src="/plugins/greensock/TimelineMax.min.js"></script>
+    <script src="/plugins/scrollmagic/ScrollMagic.min.js"></script>
+    <script src="/plugins/greensock/animation.gsap.min.js"></script>
+    <script src="/plugins/greensock/ScrollToPlugin.min.js"></script>
+    <script src="/plugins/Isotope/isotope.pkgd.min.js"></script>
+    <script src="/plugins/easing/easing.js"></script>
+    <script src="/plugins/parallax-js-master/parallax.min.js"></script>
+    <script src="/js/offers_custom.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+    <script src="/js/google-map.js"></script>
+}

@@ -1,0 +1,36 @@
+﻿@model SkiLand.Domain.Models.HotelDetailItem
+<div class="home">
+    <div class="home_background parallax-window" data-parallax="scroll" data-image-src="/images/@Model.PhotoPath" data-speed="0.4"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="home_content">
+                    <div class="home_content_inner">
+                        <h2 class="home_title text p-4">
+                            <span class="p-3 hotel-breadcrumb-title">
+                                @Model.Name
+                                <span class="rating rating_5 hotel-breadcrumb-padding">
+                                    @for (int i = 0; i < Model.Stars; i++)
+                                    {
+                                        <i class="fa fa-star"></i>
+                                    }
+                                </span>
+                            </span>
+                        </h2>
+                        <div class="row">
+                            <div class="home_breadcrumbs col-md-6">
+                                <ul class="home_breadcrumbs_list">
+                                    <li class="home_breadcrumb p-2 hotel-breadcrumb-title"><a href="/">Головна</a></li>
+                                    <li class="home_breadcrumb p-2 hotel-breadcrumb-title"><a href="/hotels">Готелі</a></li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6 p-3 hotel-breadcrumb-title">
+                                <em class="color-w">"@Model.Description"</em>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

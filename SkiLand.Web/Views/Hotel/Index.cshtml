@@ -1,0 +1,170 @@
+﻿
+@{
+    @model List<SkiLand.Domain.Models.HotelListItem>
+    ViewData["Title"] = "Готелі";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section styles
+{
+    <link rel="stylesheet" type="text/css" href="styles/hotels_styles.css">
+    <link rel="stylesheet" type="text/css" href="styles/hotels_responsive.css">
+}
+
+@section top_background
+{
+    <div class="home">
+        <div class="home_background parallax-window" data-parallax="scroll" data-image-src="images/hotels.jpg" data-speed="0.8"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="home_content">
+                        <div class="home_content_inner">
+                            <div class="home_title">Готелі</div>
+                            <div class="home_breadcrumbs">
+                                <ul class="home_breadcrumbs_list">
+                                    <li class="home_breadcrumb"><a href="/">Головна</a></li>
+                                    <li class="home_breadcrumb">Бронування Готелів</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<div class="offers">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="section_title text-center">
+                    <h2>Місце де можна відпочити</h2>
+                    <div>і зустріти схід сонця у мальовничих Карпатах</div>
+                </div>
+            </div>
+        </div>
+        <div class="row filtering_row">
+            <div class="col">
+                <div class="sorting_group_1">
+                    <ul class="item_sorting">
+                        <li>
+                            <span class="sorting_text">Сортувати</span>
+                            <i class="fa fa-angle-down"></i>
+                            <ul>
+                                <li class="item_sorting_btn"><a href="/hotels?startDate=@ViewBag.Request.StartDate.ToShortDateString()&endDate=@ViewBag.Request.EndDate.ToShortDateString()&adults=@ViewBag.Request.Adults&children=@ViewBag.Request.Children&page=@ViewBag.Request.Page&sortOrder=@ViewBag.Request.SortOrder&sort=@SkiLand.Domain.Models.HotelSortEnum.Price">Ціною</a></li>
+                                <li class="item_sorting_btn"><a href="/hotels?startDate=@ViewBag.Request.StartDate.ToShortDateString()&endDate=@ViewBag.Request.EndDate.ToShortDateString()&adults=@ViewBag.Request.Adults&children=@ViewBag.Request.Children&page=@ViewBag.Request.Page&sortOrder=@ViewBag.Request.SortOrder&sort=@SkiLand.Domain.Models.HotelSortEnum.Raiting">Рейтингом</a></li>
+                                <li class="item_sorting_btn"><a href="/hotels?startDate=@ViewBag.Request.StartDate.ToShortDateString()&endDate=@ViewBag.Request.EndDate.ToShortDateString()&adults=@ViewBag.Request.Adults&children=@ViewBag.Request.Children&page=@ViewBag.Request.Page&sortOrder=@ViewBag.Request.SortOrder&sort=@SkiLand.Domain.Models.HotelSortEnum.Stars">Зірками</a></li>
+                                <li class="item_sorting_btn"><a href="/hotels?startDate=@ViewBag.Request.StartDate.ToShortDateString()&endDate=@ViewBag.Request.EndDate.ToShortDateString()&adults=@ViewBag.Request.Adults&children=@ViewBag.Request.Children&page=@ViewBag.Request.Page&sortOrder=@ViewBag.Request.SortOrder&sort=@SkiLand.Domain.Models.HotelSortEnum.Name">Назвою</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <span class="sorting_text">за</span>
+                            <i class="fa fa-angle-down"></i>
+                            <ul>
+                                <li class="item_filter_btn"><a href="/hotels?startDate=@ViewBag.Request.StartDate.ToShortDateString()&endDate=@ViewBag.Request.EndDate.ToShortDateString()&adults=@ViewBag.Request.Adults&children=@ViewBag.Request.Children&page=@ViewBag.Request.Page&sort=@ViewBag.Request.Sort&sortOrder=@SkiLand.Domain.Models.SortOrderEnum.Asc">Зроситанням</a></li>
+                                <li class="item_filter_btn"><a href="/hotels?startDate=@ViewBag.Request.StartDate.ToShortDateString()&endDate=@ViewBag.Request.EndDate.ToShortDateString()&adults=@ViewBag.Request.Adults&children=@ViewBag.Request.Children&page=@ViewBag.Request.Page&sort=@ViewBag.Request.Sort&sortOrder=@SkiLand.Domain.Models.SortOrderEnum.Desc">Спаданням</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div class="sorting_group_2 clearfix">
+                    <div class="sorting_icons clearfix">
+                        <div class="detail_view"><i class="fa fa-bars" aria-hidden="true"></i></div>
+                        <div class="box_view"><i class="fa fa-th-large" aria-hidden="true"></i></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="items item_grid clearfix">
+
+                    @foreach (var hotel in Model)
+                    {
+                    <div class="item clearfix rating_@hotel.Stars">
+                        <div class="item_image"><img src="images/@hotel.PhotoPath" alt=""></div>
+                        <div class="item_content">
+                            <div class="item_price text-right">
+                                @if (hotel.PriceFrom == 0) {
+                                    <span>Немає вільних місць</span>
+                                } else
+                                {
+                                    <span>Ціна від @hotel.PriceFrom грн</span>
+                                }
+                            </div>
+                            <div class="item_title">@hotel.Name</div>
+                            <ul>
+                                <li>Оцінка: @hotel.Raiting</li>
+                            </ul>
+                            <div class="rating rating_@hotel.Stars" data-rating="hotel.Stars">
+                                @for (int i = 0; i < hotel.Stars; i++)
+                                {
+                                    <i class="fa fa-star"></i>
+                                }
+                            </div>
+                            <div class="item_text">@hotel.Description</div>
+                            <div class="item_more_link">
+                            <a href="/hotels/@hotel.Id?startDate=@ViewBag.Request.StartDate.ToShortDateString()&endDate=@ViewBag.Request.EndDate.ToShortDateString()&adults=@ViewBag.Request.Adults&children=@ViewBag.Request.Children">Детальніше ></a></div>
+                        </div>
+                    </div>
+                    }
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col text-center">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item @(ViewBag.Request.Page - 1 == 0 ? "disabled" : "")">
+                            <a class="page-link" href="/hotels?startDate=@ViewBag.Request.StartDate.ToShortDateString()&endDate=@ViewBag.Request.EndDate.ToShortDateString()&adults=@ViewBag.Request.Adults&children=@ViewBag.Request.Children&page=@(ViewBag.Request.Page -1)&sort=@ViewBag.Request.Sort&sortOrder=@ViewBag.Request.SortOrder" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                        </li>
+                        @for (int i = 1; i <= ViewBag.Request.PageCount; i++)
+                        {
+                            if (i == ViewBag.Request.Page)
+                            {
+                                <li class="page-item active">
+                                    <span class="page-link">
+                                        @i
+                                        <span class="sr-only">(current)</span>
+                                    </span>
+                                </li>
+                            }
+                            else
+                            {
+                            <li class="page-item"><a class="page-link" href="/hotels?startDate=@ViewBag.Request.StartDate.ToShortDateString()&endDate=@ViewBag.Request.EndDate.ToShortDateString()&adults=@ViewBag.Request.Adults&children=@ViewBag.Request.Children&page=@i&sort=@ViewBag.Request.Sort&sortOrder=@ViewBag.Request.SortOrder">@i</a></li>
+                            }
+                        }
+                        <li class="page-item @(ViewBag.Request.Page == ViewBag.Request.PageCount ? "disabled" : "")">
+                            <a class="page-link" href="/hotels?startDate=@ViewBag.Request.StartDate.ToShortDateString()&endDate=@ViewBag.Request.EndDate.ToShortDateString()&adults=@ViewBag.Request.Adults&children=@ViewBag.Request.Children&page=@(ViewBag.Request.Page + 1)&sort=@ViewBag.Request.Sort&sortOrder=@ViewBag.Request.SortOrder" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="styles/bootstrap4/popper.js"></script>
+    <script src="styles/bootstrap4/bootstrap.min.js"></script>
+    <script src="plugins/greensock/TweenMax.min.js"></script>
+    <script src="plugins/greensock/TimelineMax.min.js"></script>
+    <script src="plugins/scrollmagic/ScrollMagic.min.js"></script>
+    <script src="plugins/greensock/animation.gsap.min.js"></script>
+    <script src="plugins/greensock/ScrollToPlugin.min.js"></script>
+    <script src="plugins/Isotope/isotope.pkgd.min.js"></script>
+    <script src="plugins/easing/easing.js"></script>
+    <script src="plugins/parallax-js-master/parallax.min.js"></script>
+    <script src="js/offers_custom.js"></script>
+}
